@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - SplitEZ</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>SplitEZ</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="dashboard.html" class="nav-link"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="groups.html" class="nav-link"><i class="fas fa-users"></i> Groups</a>
+                <a href="expenses.html" class="nav-link"><i class="fas fa-receipt"></i> Expenses</a>
+                <a href="analytics.html" class="nav-link active"><i class="fas fa-chart-bar"></i> Analytics</a>
+                <a href="#" id="logoutBtn" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h2>Analytics & Leaderboard</h2>
+            <select id="analyticsMonth" class="filter-select">
+                <option value="">Select Month</option>
+            </select>
+        </div>
+
+        <div class="analytics-section">
+            <div class="xp-card">
+                <div class="xp-header">
+                    <h3>Your XP Points</h3>
+                    <span class="xp-badge" id="userXP">0 XP</span>
+                </div>
+                <div class="xp-progress">
+                    <div class="xp-bar" id="xpProgressBar"></div>
+                </div>
+                <div class="xp-level">
+                    <p>Level <span id="userLevel">1</span></p>
+                </div>
+            </div>
+
+            <div class="badges-section">
+                <h3>Your Badges</h3>
+                <div id="userBadges" class="badges-grid">
+                    <!-- Badges will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="analytics-section">
+            <h3>Monthly Spending</h3>
+            <canvas id="spendingChart"></canvas>
+        </div>
+
+        <div class="analytics-section">
+            <h3>Category Breakdown</h3>
+            <canvas id="categoryChart"></canvas>
+        </div>
+
+        <div class="analytics-section">
+            <h3>Leaderboard</h3>
+            <div id="leaderboard" class="leaderboard-list">
+                <!-- Leaderboard will be loaded here -->
+            </div>
+        </div>
+
+        <div class="analytics-section">
+            <h3>Group-wise Spending</h3>
+            <div id="groupSpending" class="group-spending-list">
+                <!-- Group spending will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="auth.js"></script>
+    <script type="module" src="analytics.js"></script>
+    <script type="module" src="analytics-page.js"></script>
+</body>
+</html>
+

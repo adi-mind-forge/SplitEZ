@@ -1,0 +1,30 @@
+# Firebase
+firebase-config.js
+# Note: Keep firebase-config.js.example or update README with instructions
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment variables
+.env
+.env.local
+
+# Build files (if any)
+dist/
+build/
+
+
+

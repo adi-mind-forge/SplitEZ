@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Details - SplitEZ</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>SplitEZ</h1>
+            </div>
+            <div class="nav-menu">
+                <a href="dashboard.html" class="nav-link"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="groups.html" class="nav-link"><i class="fas fa-users"></i> Groups</a>
+                <a href="expenses.html" class="nav-link active"><i class="fas fa-receipt"></i> Expenses</a>
+                <a href="analytics.html" class="nav-link"><i class="fas fa-chart-bar"></i> Analytics</a>
+                <a href="#" id="logoutBtn" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h2 id="expenseTitle">Expense Details</h2>
+        </div>
+
+        <div id="expenseMeta" class="expense-item" style="margin-bottom: 16px;"></div>
+
+        <div id="userSummary" class="expense-item" style="margin-bottom: 16px;"></div>
+
+        <div id="settleButtonContainer" style="margin-bottom: 16px; display: flex; gap: 8px;"></div>
+
+        <div id="peopleBreakdown" class="expenses-list">
+            <!-- Per-person items render here -->
+        </div>
+    </div>
+
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="auth.js"></script>
+    <script type="module" src="expense-details.js"></script>
+</body>
+</html>
+
+
