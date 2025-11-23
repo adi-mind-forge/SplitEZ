@@ -1,133 +1,59 @@
-/**
- * ============================================
- * AUTHENTICATION FILE (auth.js)
- * ============================================
- * This file handles all user login/signup/logout features.
- * Think of it as the security guard of our app - it checks who is logged in.
- */
-
-// Import Firebase authentication tools from firebase-config.js
 import { auth } from './firebase-config.js';
 import { 
-    createUserWithEmailAndPassword,   // For creating new accounts
-    signInWithEmailAndPassword,       // For logging in
-    signOut,                          // For logging out
-    onAuthStateChanged                // For checking if someone is logged in
+    createUserWithEmailAndPassword,   
+    signInWithEmailAndPassword,       
+    signOut,                          
+    onAuthStateChanged                
 } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
 
-// Import database tools for storing user information
 import { doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 import { db } from './firebase-config.js';
 
-/**
- * ============================================
- * FUNCTION: checkAuth()
- * ============================================
- * What it does: Checks if a user is currently logged in
- * Returns: User information if logged in, null if not logged in
- * Why we need it: So we know who the user is and what they can see
- */
 export function checkAuth() {
     return new Promise((resolve) => {
-        // Listen for changes in login status
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // User is logged in - give us their info
                 resolve(user);
             } else {
-                // User is not logged in
                 resolve(null);
             }
         });
     });
 }
 
-/**
- * ============================================
- * FUNCTION: requireAuth()
- * ============================================
- * What it does: Makes sure user is logged in before viewing a page
- * If not logged in: Sends them to the login page (index.html)
- * If logged in: Let them view the page
- * Why we need it: To protect private pages like dashboard and expenses
- */
 export async function requireAuth() {
     const user = await checkAuth();
-    // If user is NOT logged in AND they're not on the login page
+
     if (!user && !window.location.pathname.includes('index.html')) {
-        // Send them to login page
+
         window.location.href = 'index.html';
         return null;
     }
     return user;
 }
 
-/**
- * ============================================
- * FUNCTION: signUp(email, password, name)
- * ============================================
- * What it does: Creates a new user account
- * Parameters:
- *   - email: User's email address
- *   - password: Their password
- *   - name: Their display name
- * Returns: Success message and user info, or error message
- */
 export async function signUp(email, password, name) {
     try {
-        // Clean up the email (remove spaces, make lowercase)
         const normalizedEmail = (email || '').trim().toLowerCase();
         
-        // Create the account in Firebase Authentication
         const userCredential = await createUserWithEmailAndPassword(auth, normalizedEmail, password);
         const user = userCredential.user;
         
-        // Also create a user profile in the database with extra information
         await setDoc(doc(db, 'users', user.uid), {
-            name: name,                              // User's display name
-            email: normalizedEmail,                  // User's email
-            xpPoints: 0,                             // Points for achievements (starts at 0)
-            level: 1,                                // User level (starts at 1)
+            name: name,                              
+            email: normalizedEmail,                  
+            xpPoints: 0,                             
+            level: 1,                                
             badges: [],                              // Badges/achievements (starts empty)
-            createdAt: new Date().toISOString()      // Date and time account was created
+            createdAt: new Date().toISOString()      
         });
         
-        // Return success
         return { success: true, user };
     } catch (error) {
-        // If something went wrong, return the error message
         return { success: false, error: error.message };
     }
 }
 
-/**
- * ============================================
- * FUNCTION: signIn(email, password)
- * ============================================
- * What it does: Logs a user in with their email and password
- * Parameters:
- *   - email: User's email address
- *   - password: Their password
- * Returns: Success message and user info, or error message
- */
-export async function signIn(email, password) {
-    try {
-        // Authenticate the user with Firebase
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        return { success: true, user: userCredential.user };
-    } catch (error) {
-        // If login failed, return the error
-        return { success: false, error: error.message };
-    }
-}
-
-/**
- * ============================================
- * FUNCTION: signOutUser()
- * ============================================
- * What it does: Logs the user out
- * After logout: Sends them back to the login page
- */
 export async function signOutUser() {
     try {
         // Log user out from Firebase
